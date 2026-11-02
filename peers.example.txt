@@ -1,0 +1,3 @@
+# Copy to peers.txt and list the LAN IP of every other PC running the screensaver, one per line.
+# 192.168.1.20
+# 192.168.1.21

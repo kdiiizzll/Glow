@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Screensaver Control</title>
+<style>body{margin:0;background:#050805;color:#b8ffc8;font-family:Segoe UI,system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:22px}
+h1{margin:0;font-weight:600;letter-spacing:2px;font-size:22px;color:#7dff9b}
+#st{font-size:15px;opacity:.85}
+button{width:280px;height:84px;font-size:24px;font-weight:600;border-radius:16px;border:2px solid #2bff6a;background:#062a10;color:#dfffe6;cursor:pointer;transition:.15s}
+button:hover{background:#0b4a1d;box-shadow:0 0 18px #2bff6a88}button:active{transform:scale(.97)}
+#tog.off{border-color:#ff4d4d;background:#2a0606}</style></head><body>
+<h1>SCREENSAVER CONTROL</h1><div id="st">connecting…</div>
+<button id="tog">Turn ON</button><button id="nxt">Next screensaver ▶</button>
+<script>
+const names={matrix:'Matrix rain',starfield:'Starfield warp',fireworks:'Fireworks',lava:'Lava lamp',paris:'Paris night'},modes=['matrix','starfield','fireworks','lava','paris'];
+let peers=[];fetch('/peers',{cache:'no-store'}).then(r=>r.json()).then(x=>{if(Array.isArray(x))peers=x;}).catch(()=>{});let cur={on:false,mode:'matrix'};
+function show(s){cur=s;st.textContent=(s.on?'ON':'OFF')+' · '+(names[s.mode]||s.mode)+' · every PC you\'re on';tog.textContent=s.on?'Turn OFF':'Turn ON';tog.className=s.on?'off':'';}
+async function poll(){try{const r=await fetch('/state',{cache:'no-store'});show(await r.json());}catch(e){st.textContent='starting…';}}
+function setAll(on,mode){const q='/set?on='+(on?1:0)+'&mode='+mode;show({on,mode});
+ fetch(q,{cache:'no-store'}).catch(()=>{});peers.forEach(p=>fetch('http://'+p+':8765'+q,{cache:'no-store',mode:'no-cors'}).catch(()=>{}));}
+tog.onclick=()=>setAll(!cur.on,cur.mode);
+nxt.onclick=()=>setAll(true,modes[(modes.indexOf(cur.mode)+1)%modes.length]);
+poll();setInterval(poll,1500);
+</script></body></html>
