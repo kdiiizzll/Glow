@@ -1,4 +1,4 @@
-# Matrix Screensaver
+# Glow
 
 A full-screen, browser-based screensaver for Windows: classic Matrix digital rain plus four more scenes, synced across every PC in the house and controlled from a tiny web panel.
 
@@ -25,9 +25,9 @@ A full-screen, browser-based screensaver for Windows: classic Matrix digital rai
    powershell -ExecutionPolicy Bypass -File .\install.ps1
    ```
    Approve the one-time admin prompt, which opens port 8765 on private networks.
-4. Open **http://localhost:8765/** (or the *Matrix Control* shortcut on your desktop) and press **Turn ON**. Press **Esc** to exit.
+4. Open **http://localhost:8765/** (or the *Glow Control* shortcut on your desktop) and press **Turn ON**. Press **Esc** to exit.
 
-The installer puts its files in `%USERPROFILE%\Matrix` and adds two hidden startup scripts: `server.ps1` (state and control on port 8765) and `agent.ps1` (opens and closes the full-screen windows). To uninstall, delete that folder and the two `Matrix*.vbs` files in your Startup folder.
+The installer puts its files in `%USERPROFILE%\Glow` and adds two hidden startup scripts: `server.ps1` (state and control on port 8765) and `agent.ps1` (opens and closes the full-screen windows). To uninstall, delete that folder and the two `Glow*.vbs` files in your Startup folder.
 
 ## Files
 | File | What it does |
