@@ -37,9 +37,9 @@ public class BR {
 $script:lap=$null
 function BrightMax{ try{ [BR]::Max() }catch{}; try{ $w=Get-CimInstance -Namespace root/wmi WmiMonitorBrightness -EA Stop | select -First 1; if($w){ $script:lap=$w.CurrentBrightness; Get-CimInstance -Namespace root/wmi WmiMonitorBrightnessMethods | Invoke-CimMethod -MethodName WmiSetBrightness -Arguments @{Timeout=1;Brightness=[byte]100} | Out-Null } }catch{} }
 function BrightRestore{ try{ [BR]::Restore() }catch{}; if($script:lap -ne $null){ try{ Get-CimInstance -Namespace root/wmi WmiMonitorBrightnessMethods | Invoke-CimMethod -MethodName WmiSetBrightness -Arguments @{Timeout=1;Brightness=[byte]$script:lap} | Out-Null }catch{}; $script:lap=$null } }
-function Topmost{ Get-Process msedge | ?{ $_.MainWindowHandle -ne 0 } | %{ $c=(Get-CimInstance Win32_Process -Filter "ProcessId=$($_.Id)").CommandLine; if($c -match '(Screensaver|Matrix)\\profile(\d+)'){ $sc=[System.Windows.Forms.Screen]::AllScreens[[int]$matches[2]]; if($sc){ $b=$sc.Bounds; [TB]::SetWindowPos($_.MainWindowHandle,[IntPtr](-1),$b.X,$b.Y,$b.Width,$b.Height,0x40) | Out-Null; [TB]::SetForegroundWindow($_.MainWindowHandle) | Out-Null } } } }
+function Topmost{ Get-Process msedge | ?{ $_.MainWindowHandle -ne 0 } | %{ $c=(Get-CimInstance Win32_Process -Filter "ProcessId=$($_.Id)").CommandLine; if($c -match '(Screensaver|Glow)\\profile(\d+)'){ $sc=[System.Windows.Forms.Screen]::AllScreens[[int]$matches[2]]; if($sc){ $b=$sc.Bounds; [TB]::SetWindowPos($_.MainWindowHandle,[IntPtr](-1),$b.X,$b.Y,$b.Width,$b.Height,0x40) | Out-Null; [TB]::SetForegroundWindow($_.MainWindowHandle) | Out-Null } } } }
 [TB]::Bars($true); [TB]::Cursor($true)
-function Running{ @(Get-CimInstance Win32_Process -Filter "Name='msedge.exe'"|?{$_.CommandLine -match '(Screensaver|Matrix)\\profile'}) }
+function Running{ @(Get-CimInstance Win32_Process -Filter "Name='msedge.exe'"|?{$_.CommandLine -match '(Screensaver|Glow)\\profile'}) }
 $script:up=$false; Running|%{ Stop-Process -Id $_.ProcessId -Force }
 while($true){
  $s=$null
