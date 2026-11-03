@@ -4,7 +4,7 @@ A full-screen, browser-based screensaver for Windows: classic Matrix digital rai
 
 ![Matrix rain](preview.png)
 
-**▶ Live demo:** https://kdiiizzll.github.io/matrix-screensaver/
+**▶ Live demo:** https://kdiiizzll.github.io/Glow/
 *(click, Space or → for the next scene · keys 1–5 jump to a scene · or add `?mode=paris`)*
 
 ## Features
